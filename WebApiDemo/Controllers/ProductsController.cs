@@ -3,16 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApiDemo.DataAccess;
 
 namespace WebApiDemo.Controllers
 {
     [Route("api/products")]
     public class ProductsController:Controller
     {
-        [HttpGet("")]
-        public string Get()
+        IProductDal _productDal;
+        public ProductsController(IProductDal productDal)
         {
-            return "Product1";
+            _productDal = productDal;
+        }
+        [HttpGet("")]
+        public IActionResult Get()
+        {
+            var products = _productDal.GetList();
+            return Ok(products);
         }
     }
 }
