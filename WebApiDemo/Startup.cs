@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApiDemo.DataAccess;
+using WebApiDemo.Formatters;
 
 namespace WebApiDemo
 {
@@ -28,6 +29,10 @@ namespace WebApiDemo
         {
             services.AddScoped<IProductDal,EfProductDal>();
             services.AddControllers();
+            services.AddMvc(options=> 
+            {
+                options.OutputFormatters.Add(new VcardOutputFormatter());           
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
