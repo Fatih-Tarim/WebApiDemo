@@ -63,8 +63,19 @@ namespace WebApiDemo.Controllers
         {
             try
             {
-                _productDal.Delete(new Product {ProductId=productId});
+                _productDal.Delete(new Product { ProductId = productId });
                 return Ok();
+            }
+            catch { }
+            return BadRequest();
+        }
+        [HttpGet("GetProductDetails")]
+        public IActionResult GetProductsWithDetails()
+        {
+            try
+            {
+                var result = _productDal.GetProductsWithDetails();
+                return Ok(result);
             }
             catch { }
             return BadRequest();
