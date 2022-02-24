@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApiDemo.CustomMiddlewares;
 using WebApiDemo.DataAccess;
 using WebApiDemo.Formatters;
 
@@ -29,6 +30,7 @@ namespace WebApiDemo
         {
             services.AddScoped<IProductDal,EfProductDal>();
             services.AddControllers();
+
             services.AddMvc(options=> 
             {
                 options.OutputFormatters.Add(new VcardOutputFormatter());           
@@ -48,11 +50,13 @@ namespace WebApiDemo
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseMiddleware<AuthenticationMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
